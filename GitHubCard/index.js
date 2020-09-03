@@ -45,11 +45,22 @@ followersArray.forEach(function(item) {
   })
 })
 
-axios.get(`https://api.github.com/users/loganmetzger/followers`)
+const myFollowers = []
+
+
+
+axios.get(`https://api.github.com/users/tyler-jacobson/followers`)
   .then(res => {
     const cards2 = document.querySelector('.cards')
-    Array.from(res.data).forEach(function(item) {
-      cards2.appendChild(createProfile(item))
+    res.data.forEach(function(item) {
+      const friendName = item.login
+      axios.get(`https://api.github.com/users/${friendName}`)
+        .then(res => {
+          cards2.appendChild(createProfile(res.data))
+        })
+        .catch(err => {
+          console.log(err)
+        })
   })
   .catch(err => {
     console.log(err)
