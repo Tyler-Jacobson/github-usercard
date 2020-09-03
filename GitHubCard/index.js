@@ -3,8 +3,9 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+import axios from 'axios'
 
-
+// axios.get('https://api.github.com/users/tyler-jacobson')
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -51,6 +52,38 @@ const followersArray = [];
       </div>
     </div>
 */
+
+//              inputObject
+function createProfile() {
+  const card = document.createElement('div')
+  const image = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const name = document.createElement('h3')
+  const userName = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const githubLink = document.createElement('a')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  card.appendChild(image)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(userName)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  cardInfo.appendChild(githubLink)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+
+  
+
+  return card
+}
+
+console.log(createProfile())
 
 /*
   List of LS Instructors Github username's:
