@@ -5,7 +5,7 @@
 */
 import axios from 'axios'
 
-// axios.get('https://api.github.com/users/tyler-jacobson')
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -31,7 +31,31 @@ import axios from 'axios'
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell']
+
+followersArray.forEach(function(item) {
+  axios.get(`https://api.github.com/users/${item}`)
+  .then(res =>{
+    const cards = document.querySelector('.cards')
+    cards.appendChild(createProfile(res.data))
+  })
+
+  .catch(err => {
+    console.log(err)
+  })
+})
+
+axios.get(`https://api.github.com/users/loganmetzger/followers`)
+  .then(res => {
+    const cards2 = document.querySelector('.cards')
+    Array.from(res.data).forEach(function(item) {
+      cards2.appendChild(createProfile(item))
+  })
+  .catch(err => {
+    console.log(err)
+  })
+})
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -53,8 +77,9 @@ const followersArray = [];
     </div>
 */
 
-//              inputObject
-function createProfile() {
+           
+function createProfile(inputObject) {
+
   const card = document.createElement('div')
   const image = document.createElement('img')
   const cardInfo = document.createElement('div')
@@ -67,23 +92,39 @@ function createProfile() {
   const following = document.createElement('p')
   const bio = document.createElement('p')
 
+
+  
   card.appendChild(image)
   card.appendChild(cardInfo)
   cardInfo.appendChild(name)
   cardInfo.appendChild(userName)
   cardInfo.appendChild(location)
   cardInfo.appendChild(profile)
-  cardInfo.appendChild(githubLink)
+  profile.appendChild(githubLink)
   cardInfo.appendChild(followers)
   cardInfo.appendChild(following)
   cardInfo.appendChild(bio)
 
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  name.classList.add('name')
+  userName.classList.add('username')
   
+  image.src = inputObject.avatar_url
+  githubLink.href = inputObject.html_url
+  name.textContent = inputObject.name
+  userName.textContent = inputObject.login
+  location.textContent = `Location: ${inputObject.location}`
+  profile.textContent = `Profile:`
+  githubLink.textContent = inputObject.html_url
+  followers.textContent = `Followers: ${inputObject.followers}`
+  following.textContent = `Following: ${inputObject.following}`
+  bio.textContent = `Bio: ${inputObject.bio}`
+
 
   return card
 }
 
-console.log(createProfile())
 
 /*
   List of LS Instructors Github username's:
